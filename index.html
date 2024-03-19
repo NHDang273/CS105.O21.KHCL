@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Algorithm Selection</title>
+</head>
+<body>
+    <h1>Choose an Algorithm</h1>
+    <form>
+        <input type="radio" id="dda" name="algorithm" value="dda">
+        <label for="dda">DDA</label><br>
+        <input type="radio" id="bresenham" name="algorithm" value="bresenham">
+        <label for="bresenham">Bresenham</label><br>
+        <input type="radio" id="midpoint" name="algorithm" value="midpoint">
+        <label for="midpoint">Midpoint</label><br>
+    </form>
+    <div class="main-container">
+        <canvas id="canvas">
+        </canvas>
+    </div>
+
+    <div class="buttons">
+        <button id="reset">
+            Bấm trược khi muốn chọn lại thuật toán
+        </button>
+    </div>
+
+    <!-- Load JavaScript based on selection -->
+    <script>
+        var algorithmRadios = document.querySelectorAll('input[name="algorithm"]');
+
+        algorithmRadios.forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                var selectedAlgorithm = this.value;
+                loadAlgorithmScript(selectedAlgorithm);
+            });
+        });
+
+        function loadAlgorithmScript(algorithm) {
+            // Remove previously loaded script
+            var existingScript = document.getElementById('algorithm-script');
+            if (existingScript) {
+                existingScript.remove();
+            }
+
+            // Create a new script element and append it to the body
+            var newScript = document.createElement('script');
+            newScript.src = 'src/' + algorithm + '.js';
+            newScript.id = 'algorithm-script';
+            document.body.appendChild(newScript);
+        }
+
+        // Reload the page when Reset button is clicked
+        document.getElementById("reset").addEventListener("click", function() {
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>
